@@ -84,17 +84,14 @@ def play_matches(cpu_agents, test_agents, num_matches):
     total_forfeits = 0.
     total_matches = 2 * num_matches * len(cpu_agents)
 
-    print("\n{:^9}{:^13}{:^13}{:^13}{:^13}{:^13}".format(
-        "Match #", "Opponent", test_agents[0].name, test_agents[1].name,
-        test_agents[2].name, test_agents[3].name))
-    print("{:^9}{:^13} {:^5}| {:^5} {:^5}| {:^5} {:^5}| {:^5} {:^5}| {:^5}"
-          .format("", "", *(["Won", "Lost"] * 4)))
+    print("\n{:^9}{:^13}{:^13}{:^13}".format(
+        "Match #", "Opponent", test_agents[0].name, test_agents[1].name))
+    print("{:^9}{:^13} {:^5}| {:^5} {:^5}| {:^5}"
+          .format("", "", *(["Won", "Lost"] * 2)))
 
     for idx, agent in enumerate(cpu_agents):
         wins = {test_agents[0].player: 0,
                 test_agents[1].player: 0,
-                test_agents[2].player: 0,
-                test_agents[3].player: 0,
                 agent.player: 0}
 
         print("{!s:^9}{:^13}".format(idx + 1, agent.name), end="", flush=True)
@@ -106,11 +103,11 @@ def play_matches(cpu_agents, test_agents, num_matches):
         _total = 2 * num_matches
         round_totals = sum([[wins[agent.player], _total - wins[agent.player]]
                             for agent in test_agents], [])
-        print(" {:^5}| {:^5} {:^5}| {:^5} {:^5}| {:^5} {:^5}| {:^5}"
+        print(" {:^5}| {:^5} {:^5}| {:^5} "
               .format(*round_totals))
 
     print("-" * 74)
-    print("{:^9}{:^13}{:^13}{:^13}{:^13}{:^13}\n".format(
+    print("{:^9}{:^13}{:^13}{:^13}\n".format(
         "", "Win Rate:",
         *["{:.1f}%".format(100 * total_wins[a.player] / total_matches)
           for a in test_agents]
@@ -133,8 +130,8 @@ def main():
     test_agents = [
         Agent(AlphaBetaPlayer(score_fn=improved_score), "AB_Improved"),
         Agent(AlphaBetaPlayer(score_fn=custom_score), "AB_Custom"),
-        Agent(AlphaBetaPlayer(score_fn=custom_score_2), "AB_Custom_2"),
-        Agent(AlphaBetaPlayer(score_fn=custom_score_3), "AB_Custom_3")
+        # Agent(AlphaBetaPlayer(score_fn=custom_score_2), "AB_Custom_2"),
+        # Agent(AlphaBetaPlayer(score_fn=custom_score_3), "AB_Custom_3")
     ]
 
     # Define a collection of agents to compete against the test agents
